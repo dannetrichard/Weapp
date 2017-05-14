@@ -1,0 +1,82 @@
+<view class="container">
+
+	<view class="addr" bindtap="addr">
+		<image class="addricon" mode="aspectFit" src="../../common/order_address_empty_icon.png"/>
+		<view class="addrtext">
+			<view class="row1">
+				<view class="name">收货人：{{addr.userName}}</view>
+				<view class="tel">{{addr.telNumber}}</view>
+			</view>
+			<view class="street">{{addr.provinceName}}{{addr.cityName}}{{addr.detailInfo}}</view>
+		</view>
+		<image class="addrenter" mode="aspectFit" src="../../common/right.png"/>
+	</view>
+	<image class="strip" src="../../common/strip.png"/>
+	<view class="gutter"></view>
+
+
+
+
+	<view class="order">
+		<view class="order_header">
+		<view class="oh1">
+			<image class="oh11" mode="aspectFill" src="../../common/shop.png"/>
+			</view>
+			<view class="oh2">JULY 女装严选</view>
+			<view class="oh3"></view>
+		</view>
+		<view class="cut-off"></view>
+		<view class="order_body">
+			<view class="ob1">
+				<image class="ob11" mode="aspectFit" src="{{order.img_url}}"/>
+			</view>
+			<view class="ob2">
+				<view class="ob21">{{order.name}}</view>
+				<view class="ob22">{{order.sku_properties_name}}</view>
+			</view>
+			<view class="ob3">
+				<view class="ob31">¥ {{order.price}}</view>
+				<view class="ob32">X{{order.num}}</view>
+			</view>
+		</view>
+		<view class="cut-off2"></view>
+		<view class="d-num">
+			<text class="d-n1">购买数量</text>
+			<view class="d-n2">
+		            	<image class="d-n2-l" mode="aspectFit" src="{{order.num == 1 ? '../../common/move_disable.png' : '../../common/move.png'}}" style="{{order.num == 1 ? 'background-color:#fbfbfb;' : ''}}" bindtap="move"/>
+		            	<input class="d-n2-c" type="number" maxlength="4" confirm-type="done" bindblur="update" value="{{order.num}}"/>
+		            	<image class="d-n2-r" mode="aspectFit" src="../../common/add.png" bindtouchstart="add"/>
+			</view>
+		</view>
+	    	<view class="cut-off2"></view>
+		<view class="order_footer">
+			<view class="of">
+				<view class="tl">商品总额</view>
+				<view class="tr">¥ {{order.total_fee}}</view>
+			</view>
+			<view class="of">
+				<view class="tl">优惠抵扣</view>
+				<view class="trr">-¥ 0.00</view>
+			</view>
+			<view class="of">
+				<view class="tl">优惠折扣</view>
+				<view class="trr">¥ 0.00</view>
+			</view>
+		</view>
+		<view class="cut-off2"></view>
+		<view class="order_total">
+			<view class="otl">合计:</view>
+			<view class="otr">¥ {{order.total_fee}}</view>
+		</view>
+	</view>	
+	<view class="gutter"></view>
+
+
+
+	<view class="bottom">
+		<view class="bm1">合计:<text class="bm1t">¥ {{order.total_fee}}</text></view>
+		<view class="bm2" bindtap="order_submit">提交订单</view>
+	</view>
+</view>
+
+

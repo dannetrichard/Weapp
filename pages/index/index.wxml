@@ -1,0 +1,16 @@
+
+<view class="container">
+	<view class="box">
+		<view class="item" wx:for="{{products}}" wx:key="id">	
+
+				<image  class="pic {{flag > index ? 'loaded' : 'loading'}}" mode="aspectFill"  src="{{flag >= index ? item.pic_url+'_400x400' : ''}}" data-id="{{index}}" bindload="img_load" bindtap="bindP"/>
+
+			<view class="name" >{{item.name}}</view>
+
+			<view class="price" >¥ {{item.price}}</view>
+
+		</view>
+	</view>
+</view>
+
+

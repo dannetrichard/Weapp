@@ -1,0 +1,50 @@
+<view class="container">
+
+
+<view class="order">
+	<view class="single">
+		<image mode="aspectFit" class="icon" src="../../common/c5k.png"/>
+		<text class="text">待付款</text>	
+	</view>
+	<view class="single">
+		<image mode="aspectFit" class="icon" src="../../common/c5l.png"/>
+		<text class="text">待收货</text>	
+	</view>
+	<view class="single">
+		<image mode="aspectFit" class="icon" src="../../common/c5m.png"/>
+		<text class="text">待评价</text>	
+	</view>
+	<view class="single">
+		<image mode="aspectFit" class="icon" src="../../common/c5n.png"/>
+		<text class="text">售后</text>	
+	</view>
+	<view class="single boder-left">
+		<image mode="aspectFit" class="icon" src="../../common/c5j.png"/>
+		<text class="text">全部订单</text>	
+	</view>
+</view>
+
+
+<view class="list">
+	<view class="item">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_shop_cart.png"/>
+		<text class="textrow">购物车</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/mine_right_arrow_black.png"/>
+	</view>
+	<view class="item boder-top">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_collection_icon.png"/>
+		<text class="textrow">收藏</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/mine_right_arrow_black.png"/>
+	</view>
+</view>
+<view class="list">
+	<view class="item">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_help_center.png"/>
+		<text class="textrow">帮助中心</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/mine_right_arrow_black.png"/>
+	</view>
+</view>
+
+</view>
+
+

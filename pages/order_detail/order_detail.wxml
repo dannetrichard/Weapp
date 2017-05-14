@@ -1,0 +1,85 @@
+
+
+
+
+<view class="container">
+	<view class="status" style="background-color:#09bb07;">
+		<image class="sm" mode="aspectFit" src="../../common/order_detail_status_icon.png"/>
+		<text class="st">等待付款</text>
+	</view>
+	<view class="addr">
+		<image class="addricon" mode="aspectFit" src="../../common/order_address_empty_icon.png"/>
+		<view class="addrtext">
+			<view class="row1">
+				<view class="name">收货人：{{addr.userName}}</view>
+				<view class="tel">{{addr.telNumber}}</view>
+			</view>
+			<view class="street">{{addr.street}}</view>
+		</view>
+	</view>
+<view class="gutter"></view>
+
+<view class="order">
+	<view class="order_header">
+	<view class="oh1">
+		<image class="oh11" mode="aspectFill" src="https://gd2.alicdn.com/imgextra/i2/2205569833/TB2Qat9n0BopuFjSZPcXXc9EpXa_!!2205569833.jpg"/>
+		</view>
+		<view class="oh2">JULY 女装严选</view>
+		<view class="oh3"></view>
+	</view>
+	<view class="cut-off"></view>
+
+
+	<view class="order_body"  >
+		<view class="ob1">
+			<image class="ob11" mode="aspectFit" src="{{order.img_url}}"/>
+		</view>
+		<view class="ob2">
+			<view class="ob21">{{order.name}}</view>
+			<view class="ob22">{{order.sku_properties_name}}</view>
+		</view>
+		<view class="ob3">
+			<view class="ob31">¥ {{order.price}}</view>
+			<view class="ob32">X{{order.num}}</view>
+		</view>
+	</view>
+	<view class="cut-off2"></view>
+
+
+			
+	<view class="order_footer">
+		<view class="of">
+			<view class="tl">商品总额</view>
+			<view class="tr">¥ {{order.total_fee}}</view>
+		</view>
+		<view class="of">
+			<view class="tl">优惠抵扣</view>
+			<view class="tr">-¥ {{order.adjust_fee}}</view>
+		</view>
+		<view class="of">
+			<view class="tl">优惠折扣</view>
+			<view class="tr">¥ {{order.discount_fee}}</view>
+		</view>
+	</view>
+	<view class="cut-off2"></view>
+	<view class="order_total">
+		<view class="otl">合计:</view>
+		<view class="otr">¥ {{order.total_fee}}</view>
+	</view>
+</view>	
+<view class="gutter"></view>
+
+<view class="msg-outer">
+<view class="msg">
+	<view class="code">订单编号 : {{tid}}</view>
+	<view class="time">创建时间 : {{created}}</view>	
+</view>
+</view>
+<view class="gutter"></view>
+
+
+<view class="pay">立即付款</view>
+
+</view>
+
+

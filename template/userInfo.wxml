@@ -1,0 +1,7 @@
+<template name="userInfo">
+	<view class="bg"></view>
+	<view class="info">
+		<image class="avatar" mode="aspectFill" src="{{avatarUrl}}"/>
+		<view class="nick">{{nickName}}</view>
+	</view>
+</template>

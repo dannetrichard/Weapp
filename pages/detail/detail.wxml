@@ -1,0 +1,99 @@
+
+<view class="container">
+	<swiper class="item_imgs" indicator-dots="true"   duration="800" >
+	    <swiper-item wx:for="{{product.item_imgs}}" wx:key="item">
+			<image  class="item_img {{main_flag > index ? 'loaded' : 'loading'}}" mode="widthFix"  src="{{main_flag >= index ? item : ''}}" bindload="main_load" data-id="{{index}}" bindtap="bindPI"/>
+	    </swiper-item>
+	</swiper>
+
+    <view class="desc" bindtap="is_show">
+		<block wx:for="{{product.desc}}" wx:key="item">
+			<image  class="desc_img" mode="widthFix"  src="../../common/loading.gif" wx:if="{{desc_flag < index }}"/>		
+			<image  class="desc_img {{desc_flag > index ? 'loaded' : 'loading'}}" mode="widthFix"  src="{{desc_flag >= index ? item : ''}}" bindload="desc_load" />
+		</block>
+    </view>
+
+    <view class="buy-now" wx:if="{{is_show}}">
+        <button class="sure-buy" data-id="2" bindtouchstart="sku_toggle">立即购买</button>
+    </view>
+
+
+
+    <!--view class="bottom" wx:if="{{is_show}}">
+    	<view class="b1">
+            <image class="b1m" src="../../common/community_light-01.png"/>
+            <text class="b1t">客服</text>
+        </view>
+        <button class="b1-contact" open-type="contact"></button>
+    	<view class="b2">
+            <image class="b1m" src="../../common/favor_light-01.png"/>
+            <text class="b1t">收藏</text>
+        </view>
+    	<view class="b3">
+            <image class="b1m" src="../../common/cart_light-01.png"/>
+            <text class="b1t">购物车</text>
+        </view>
+    	<view class="b4"  data-id="1" bindtouchstart="sku_toggle">加入购物车</view>
+    	<view class="b5" data-id="2" bindtouchstart="sku_toggle">立即购买</view>
+    </view-->
+
+
+
+    <view class="cover" wx:if="{{sku.is_show}}" bindtap="sku_toggle">
+    </view>
+
+    <view class="sku"  style="{{sku.is_show ? '':'visibility:hidden;bottom:-1200rpx;'}}">
+    	<view class="sku-d">
+    		<view class="d-price">
+    			<view class="d-p1">
+    				<image class="d-p1m" mode="aspectFill" bindtouchstart="sku_pic" src="{{sku.img_url ==null ? '': (sku.img_url + '_200x200')}}"/>
+    			</view>
+                <view class="d-p2">
+                    <text class="d-p2p">¥{{sku.price}}</text>
+                    <text class="d-p2q">库存{{sku.quantity}}件</text>
+                    <text class="d-p2s" wx:if="{{sku.prop_str[0] == '' && sku.prop_str[1] == '' }}">选择 {{product.sku_props[0].propName}} {{product.sku_props[1].propName}}</text>
+                    <text class="d-p2s" wx:elif="{{sku.prop_str[0] == '' }}">请选择 {{product.sku_props[0].propName}}</text>
+                    <text class="d-p2s" wx:elif="{{sku.prop_str[1] == '' }}">请选择 {{product.sku_props[1].propName}}</text>                    
+                    <text class="d-p2s" wx:else>已选:"{{sku.prop_str[0]}}" "{{sku.prop_str[1]}}"</text>
+                </view>
+                <view class="d-p3"><image class="d-p3m" src="../../common/round_close.png" bindtouchstart="sku_toggle"/></view>
+    		</view>
+
+            <view class="cut-off4"></view>
+
+            <block wx:for="{{product.sku_props}}" wx:for-index="index" wx:for-item="item">
+    		<view class="d-color" >
+    			<view class="d-c1">{{item.propName}}</view>
+    			<view class="d-c2">
+    				<text class="d-c2c" wx:for="{{item.values}}" wx:for-index="key" wx:for-item="val" style="{{sku.prop_id[index] == key ? 'background-color:#ff557b;color:#fff;': ''}}{{sku.is_active[index][key] ? '':'background-color:#f5f5f5;color:#ccc;'}}" bindtouchstart="{{sku.is_active[index][key] ? 'sku_select':''}}" data-oid="{{index}}" data-id="{{key}}">{{val.name}} </text>
+    			</view>
+                
+    		</view>
+            <view class="cut-off3"></view>
+            </block>
+
+
+
+
+
+    		<view class="d-num">
+    			<text class="d-n1">购买数量</text>
+    			<view class="d-n2">
+                    <image class="d-n2-l" mode="aspectFit" src="{{sku.num == 1 ? '../../common/move_disable.png' : '../../common/move.png'}}" style="{{sku.num == 1 ? 'background-color:#fbfbfb;' : ''}}" bindtap="move"/>
+                    <input class="d-n2-c" type="number" maxlength="4" confirm-type="done" bindblur="update" value="{{sku.num}}"/>
+                    <image class="d-n2-r" mode="aspectFit" src="../../common/add.png" bindtouchstart="add"/>
+                </view>
+    		</view>
+    	   <view class="cut-off3"></view>
+    	</view>
+    	
+        <view wx:if="{{cart_or_buy == 0}}" class="sku-s2" >
+            <view class="sku-s-s1" data-id="1" bindtouchstart="sure">加入购物车</view>
+            <view class="sku-s-s2" data-id="2" bindtouchstart="sure">立即购买</view>
+        </view>
+
+        
+        <view  wx:else class="sku-s" data-id="0" bindtouchstart="sure">确认</view>
+    </view>
+</view>
+

@@ -1,0 +1,40 @@
+{
+    "pages": [
+        
+        "pages/index/index",    
+        "pages/order/order",
+        "pages/detail/detail",
+        "pages/personal/personal",
+        "pages/order_detail/order_detail",
+        "pages/test/test",  
+        "pages/order_conform/order_conform" 
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#c62f2f",
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "JULY",  
+        "backgroundColor":"#fff",
+        "backgroundTextStyle": "dark",
+        "enablePullDownRefresh":"false"
+    },
+    "tabBar": {
+      "selectedColor":"#ff5777",
+      "color":"#666",
+      "list": [
+      
+      {
+        "pagePath": "pages/index/index",
+        "iconPath":"common/cl.png",
+        "selectedIconPath":"common/cm.png",
+        "text": "首页"
+      }
+      , {
+        "pagePath": "pages/personal/personal",
+        "iconPath":"common/cn.png",
+        "selectedIconPath":"common/co.png",
+        "text": "我的"
+      }]
+    },
+    "debug": true
+}
+ 

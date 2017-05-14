@@ -1,0 +1,32 @@
+.bg{
+	position:fixed;
+	left:0;
+	top:0;	
+
+	width:750rpx;
+	height:750rpx;
+	background-color:#c62f2f;
+	z-index:-1;
+}
+.info{
+	width:750rpx;
+	height:300rpx;
+
+	display: flex;
+	flex-flow: column nowrap ;
+	justify-content: center;
+	align-content: center;	
+}
+.avatar{
+	width:150rpx;
+	height:150rpx;
+	border-radius:75rpx;
+	border:3rpx solid #fff;
+	margin:10rpx auto;
+	overflow:hidden;
+}
+.nick{
+	color:#fff;
+	font-size:12pt;
+	text-align:center;
+}

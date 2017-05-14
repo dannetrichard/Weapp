@@ -1,0 +1,61 @@
+<import src="../../template/userInfo.wxml"/>
+<view class="container">
+
+<template is="userInfo" data="{{...userInfo}}"/>
+
+<view class="gutter"></view>
+
+<view class="order">
+	<navigator url="/pages/order/order?n=2" class="single">
+		<image mode="aspectFit" class="icon" src="../../common/lz.png"/>
+		<text class="text">全部订单</text>	
+	</navigator>
+	<navigator url="/pages/order/order?n=3" class="single">
+		<image mode="aspectFit" class="icon" src="../../common/lv.png"/>
+		<text class="text">待付款</text>	
+	</navigator>
+	<navigator url="/pages/order/order?n=4" class="single">
+		<image mode="aspectFit" class="icon" src="../../common/lx.png"/>
+		<text class="text">待发货</text>	
+	</navigator>
+	<navigator url="/pages/order/order?n=5" class="single">
+		<image mode="aspectFit" class="icon" src="../../common/lu.png"/>
+		<text class="text">待收货</text>	
+	</navigator>
+	<navigator url="/pages/order/order?n=1" class="single">
+		<image mode="aspectFit" class="icon" src="../../common/lw.png"/>
+		<text class="text">售后</text>	
+	</navigator>
+</view>
+<view class="gutter"></view>
+<view class="list">
+	<view class="item">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_shop_cart.png"/>
+		<text class="textrow">购物车</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/right.png"/>
+	</view>
+	<view class="split-line2"></view>
+	<view class="item">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_collection_icon.png"/>
+		<text class="textrow">收藏</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/right.png"/>
+	</view>
+</view>
+<view class="gutter"></view>
+<view class="list">
+	<view class="item">
+		<image mode="aspectFit" class="iconrow" src="../../common/mine_help_center.png"/>
+		<text class="textrow">帮助中心</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/right.png"/>
+	</view>
+	<view class="split-line2"></view>
+	<view class="item" bindtap="clear_storage">
+		<image mode="aspectFit" class="iconrow" src="../../common/camera_switch_camera_ic.png"/>
+		<text class="textrow">清除缓存</text>
+		<image mode="aspectFit" class="iconenter" src="../../common/right.png"/>
+	</view>
+</view>
+
+</view>
+
+
