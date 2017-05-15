@@ -1,64 +1,71 @@
 @import "../../template/userInfo.wxss";
-
-
-
-.order{
-	width:750rpx;
-	height:180rpx;
-	display: flex;
-	flex-flow: row nowrap ;
-	justify-content: space-around;
-	align-content: center;
-	background-color:#fff;
-}
-.single{
-	width:150rpx;
-	height:180rpx;
-	display: flex;
-	flex-flow: column nowrap ;
-	justify-content: center ;
-	align-content: center;
-}
-.icon{
-	width:54rpx;
-	height:54rpx;
-	margin:0 auto 10rpx;
-}
-.text{
-	color:#999;
-	font-size:8pt;
-	text-align:center
-}
-.list{
-	width:750rpx;
-	background-color:#fff;	
-
-	display: flex;
-	flex-flow: column nowrap ;
-	justify-content: flex-start;
-	align-content: center;
-}
-.item{
-	width:720rpx;
-	height:90rpx;
-	margin-left:30rpx;
-}
-.iconrow{
-	width:40rpx;
-	height:40rpx;	
-	vertical-align: middle;
-}
-.textrow{
-	color:#666;
-	font-size:11pt;
-	font-weight:400;
-	line-height: 90rpx;
-	margin-left:50rpx;
-}
-.iconenter{
-	width:10rpx;
-	height:90rpx;	
-	margin-right:50rpx;
-	float:right;
+page {
+    background: #efeff4;
 }
 
+.order {
+    width: 750rpx;
+    height: 180rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-content: center;
+    background-color: #fff;
+}
+
+.single {
+    width: 150rpx;
+    height: 180rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.icon {
+    width: 54rpx;
+    height: 54rpx;
+    margin: 0 auto 10rpx;
+}
+
+.text {
+    color: #999;
+    font-size: 8pt;
+    text-align: center
+}
+
+.list {
+    width: 750rpx;
+    background-color: #fff;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.item {
+    width: 720rpx;
+    height: 90rpx;
+    margin-left: 30rpx;
+}
+
+.iconrow {
+    width: 40rpx;
+    height: 40rpx;
+    vertical-align: middle;
+}
+
+.textrow {
+    color: #666;
+    font-size: 11pt;
+    font-weight: 400;
+    line-height: 90rpx;
+    margin-left: 50rpx;
+}
+
+.iconenter {
+    width: 10rpx;
+    height: 90rpx;
+    margin-right: 50rpx;
+    float: right;
+}

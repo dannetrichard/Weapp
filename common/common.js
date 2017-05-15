@@ -1,10 +1,11 @@
-function login(callback) {
-    wx.clearStorage()
+function login(cb,clear=false) {
+    if(clear){
+      wx.clearStorage()  
+    }
     wx.getStorage({
         key: 'api_token',
         success:function(res){
-            callback(res.data)
-            console.log('api_token', 'in storage')
+            typeof cb == "function" && cb(res.data)
         },
         fail: function(){
             wx.login({
@@ -17,22 +18,21 @@ function login(callback) {
                             },
                             success: function(res) {
                                 if(res.data.length == 32){
-                                    callback(res.data)
-                                    console.log('login', 'success')
+                                    typeof cb == "function" && cb(res.data)
                                     wx.setStorage({
                                         key: "api_token",
                                         data: res.data
                                     })  
                                 }else{
                                     wx.showToast({
-                                        title: '登录失败',
+                                        title: '返回的api_token异常',
                                         image: '../../common/info.png'
                                     })                                    
                                 }
                             },
                             fail:function(){
                                 wx.showToast({
-                                    title: '登录失败',
+                                    title: '获取api_token失败',
                                     image: '../../common/info.png'
                                 })
                             }
@@ -40,27 +40,16 @@ function login(callback) {
                     }
                 },
                 fail: function() {
-                    console.log('wx.login', 'fail')
+                    wx.showToast({
+                        title: '登录微信失败',
+                        image: '../../common/info.png'
+                    })
                 }
             });        
         }
     })
 }
-
-function get_user_info(that){
-    wx.getUserInfo({
-        success: function(res) {
-            that.setData({
-                userInfo:res.userInfo
-            })
-        }
-    })
-}
-
-
-
 module.exports.login = login
-module.exports.get_user_info = get_user_info
 
 
 

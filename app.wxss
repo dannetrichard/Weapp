@@ -1,6 +1,3 @@
-page{
-background-color:#efeff4;
-}
 .container {
   height: 100%;
   display: flex;
@@ -9,7 +6,6 @@ background-color:#efeff4;
   justify-content: flex-start;
   box-sizing: border-box;
 } 
-
 .split-line{
 	width:100%;
 	height:1rpx;
@@ -31,18 +27,4 @@ background-color:#efeff4;
 	width:100%;
 	height:20rpx;
 	background:#efeff4;
-}
-
-
-.font-nomal{
-	font-size:11pt;
-	color:#353535;
-	line-height:20rpx;
-	text-align:center;
-}
-.font-small{
-	font-size:11pt;
-	color:#353535;
-	line-height:20rpx;
-	text-align:center;	
 }

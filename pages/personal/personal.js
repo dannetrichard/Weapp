@@ -1,4 +1,4 @@
-var common = require('../../common/common.js');
+var app = getApp()
 Page({
     data: {
         userInfo:{}
@@ -10,7 +10,11 @@ Page({
 	       })
     },
     onLoad: function() {
-    	var that = this
-        common.get_user_info(that)
+        var that = this
+        app.getUserInfo(function(userInfo){
+            that.setData({
+                userInfo:userInfo
+            }) 
+        })
     }
 })

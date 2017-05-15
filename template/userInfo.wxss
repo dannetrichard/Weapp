@@ -4,13 +4,14 @@
 	top:0;	
 
 	width:750rpx;
-	height:750rpx;
+	height:300rpx;
 	background-color:#c62f2f;
 	z-index:-1;
 }
 .info{
 	width:750rpx;
 	height:300rpx;
+	background-color:#c62f2f;
 
 	display: flex;
 	flex-flow: column nowrap ;

@@ -1,23 +1,19 @@
 var app = getApp()
- var common = require('../../common/common.js');
-// common.login()
-var get_products = function(that) {
-    if (that.data.next_page_url !== '') {
-        wx.request({
-            url: that.data.next_page_url,
-            success: function(res) {
-                var products = res.data.data.map(function (item,index) {
-                        return Object.assign(item,{'loaded':false});
-                }); 
+var common = require('../../common/common.js');
+var products = []
+var next_page_url = 'https://43691113.julystu.xyz/product'
+var load_once = 20
 
-                that.setData({
-                    products: that.data.products.concat(products),
-                    next_page_url: res.data.next_page_url,
-                })
+var get_list = function(cb) {
+    if (next_page_url) {
+        wx.request({
+            url: next_page_url,
+            success: function(res) {
+                products = products.concat(res.data.data)
+                next_page_url = res.data.next_page_url
+                typeof cb == "function" && cb(products)
             }
         })
-    } else {
-        console.log('no more');
     }
 }
 
@@ -25,63 +21,57 @@ var get_products = function(that) {
 Page({
     data: {
         products: [],
-        flag:0,
-        next_page_url: 'https://43691113.julystu.xyz/product',
-        api_token:''
+        load_flag: 0
     },
-    bindD: function (e) {
-        var that = this  
-        var id = e.currentTarget.dataset.hi;
-        wx.previewImage({
-          current: that.data.products[id].item_imgs[0], // 当前显示图片的http链接
-          urls: that.data.products[id].item_imgs // 需要预览的图片http链接列表
-        })
-    },
-    bindP: function (e) {
-        var that = this  
-        var id = e.currentTarget.dataset.id;
-        wx.navigateTo({
-            url: '/pages/test/test?id=' + that.data.products[id].id
-        })
-    },
-    onShareAppMessage: function () {
-        return {
-          title: 'JULY女装',
-          path: '/pages/index/index',
-          success: function(res) {
-            // 分享成功
-          },
-          fail: function(res) {
-            // 分享失败
-          }
-        }
-    },
-    img_load: function(e){
-        var that = this
-        that.setData({
-            flag:that.data.flag + 1
-        }) 
-    },  
     onLoad: function() {
         var that = this
-        get_products(that);
-    
-        common.login(function(){console.log('login')})
+        get_list(function(products) {
+            that.setData({
+                products: products.splice(0, load_once)
+            })
+        })
     },
-    onReady: function() {
-        var that = this
+    pic_load: function() {
+        this.setData({
+            load_flag: this.data.load_flag + 1,
+        })
+        if(products.length<load_once){
+            get_list()
+        }
     },
-    onReachBottom:function () {
-        var that = this
-        get_products(that)  
+    onReachBottom: function() {
+        this.setData({
+            products: this.data.products.concat(products.splice(0, load_once))
+        })
     },
     onPullDownRefresh: function() {
-        wx.stopPullDownRefresh()
         var that = this
-        that.setData({
-            products: [],
-            next_page_url: 'https://43691113.julystu.xyz/product'
-        })
-        get_products(that);
+        wx.stopPullDownRefresh()
+        products = []
+        next_page_url = 'https://43691113.julystu.xyz/product'        
+        get_list(function(products) {
+            that.setData({
+                products: products.splice(0, load_once)
+            })
+        })        
     }
+
 })
+
+
+/*
+    detail: function(e) {
+        var that = this
+        wx.navigateTo({
+            url: '/pages/test/test?id=' + e.currentTarget.dataset.id
+        })
+    },
+    onShareAppMessage: function() {
+        return {
+            title: 'JULY女装',
+            path: '/pages/index/index',
+            success: function(res) {},
+            fail: function(res) {}
+        }
+    }
+*/

@@ -1,17 +1,15 @@
 var tool = require('../../template/sku.js');
 
 
-
-
 Page({
     data: {
-        product:{},
-        sku:{},
+        product: {},
+        sku: {},
         item_flag: 0,
-        desc_flag:0,
-        loading_flag:true
+        desc_flag: 0,
+        loading_flag: true
     },
-        onShareAppMessage: function() {
+    onShareAppMessage: function() {
         return {
             title: '商品详情',
             path: '/pages/detail/detail?id=' + this.product.id,
@@ -20,30 +18,28 @@ Page({
         }
     },
     itemPreview: function(e) {
-        console.log(e.target.dataset.id)
         var imgs = this.data.product.item_imgs
         var temp = imgs[e.target.dataset.id]
         for (var i = e.target.dataset.id; i > 0; i--) {
             imgs[i] = imgs[i - 1]
         }
         imgs[0] = temp
-        console.log(imgs)
         wx.previewImage({
             urls: imgs
         })
     },
-    img_url_preview:function(){
-         wx.previewImage({
+    img_url_preview: function() {
+        wx.previewImage({
             urls: [this.data.sku.img_url]
-        })       
+        })
     },
     item_load: function() {
         var that = this
         that.setData({
             item_flag: that.data.item_flag + 1
         })
-        if(that.data.item_flag==1&&that.data.desc_flag>0){
-             wx.hideLoading()
+        if (that.data.item_flag == 1 && that.data.desc_flag > 0) {
+            wx.hideLoading()
         }
     },
     desc_load: function() {
@@ -51,13 +47,13 @@ Page({
         that.setData({
             desc_flag: that.data.desc_flag + 1
         })
-        if(that.data.item_flag>0&&that.data.desc_flag==1){
-             wx.hideLoading()
+        if (that.data.item_flag > 0 && that.data.desc_flag == 1) {
+            wx.hideLoading()
         }
     },
-    build:function(e){
-        var that=this
-        tool.buildData(that,e.currentTarget.dataset.x,e.currentTarget.dataset.y)
+    build: function(e) {
+        var that = this
+        tool.buildData(that, e.currentTarget.dataset.x, e.currentTarget.dataset.y)
     },
     add: function() {
         var that = this
@@ -70,48 +66,48 @@ Page({
     },
     update: function(e) {
         var that = this
-        tool.update(that,e)
+        tool.update(that, e)
 
     },
-    sku_show:function(){
+    sku_show: function() {
         var that = this
         var sku = that.data.sku
         sku.is_show = true
         that.setData({
             sku: sku
-        })        
+        })
     },
-    sku_hidden:function(){
+    sku_hidden: function() {
         var that = this
         var sku = that.data.sku
         sku.is_show = false
         that.setData({
             sku: sku
-        })        
+        })
     },
-    to_buy:function(){
+    to_buy: function() {
         var url = '/pages/order_conform/order_conform?' +
-                    'product_id=' + this.data.product.product_id +
-                    '&cid=' + this.data.product.cid +
-                    '&name=' + this.data.product.name +
-                    '&sku_id=' + this.data.sku.sku_id +
-                    '&img_url=' + this.data.sku.img_url +
-                    '&price=' + this.data.sku.price +
-                    '&num=' + this.data.sku.num +
-                    '&quantity=' + this.data.sku.quantity +
-                    '&sku_properties_name=' + this.data.sku.prop_properties_name
+            'product_id=' + this.data.product.product_id +
+            '&cid=' + this.data.product.cid +
+            '&name=' + this.data.product.name +
+            '&sku_id=' + this.data.sku.sku_id +
+            '&img_url=' + this.data.sku.img_url +
+            '&price=' + this.data.sku.price +
+            '&num=' + this.data.sku.num +
+            '&quantity=' + this.data.sku.quantity +
+            '&sku_properties_name=' + this.data.sku.prop_properties_name
 
-                wx.navigateTo({
-                    url: url
-                })
+        wx.navigateTo({
+            url: url
+        })
     },
     onLoad: function(e) {
         var that = this
         wx.showLoading({
             title: '加载中',
-            mask:true
+            mask: true
         })
-        tool.get_product(that,e.id)
+        tool.get_product(that, e.id)
     }
 
 })
