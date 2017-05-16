@@ -21,10 +21,6 @@ function get_product(that, i) {
     })
 }
 
-
-
-
-
 function getNum(key) {
     var result = 0,
         i, j, m,
@@ -64,7 +60,6 @@ function getNum(key) {
     return result;
 }
 
-
 function sku_init(that) {
     var i = 0
     var sku = {
@@ -79,10 +74,7 @@ function sku_init(that) {
         'shop_price': that.data.product.shop_price,
         'quantity': that.data.product.num,
         'num': '1',
-        'block': [
-            [],
-            []
-        ],
+        'block': [],
         'sku_props': that.data.product.sku_props,
     }
 
@@ -154,21 +146,20 @@ function coregen(sku) {
 }
 
 function genBlock(sku) {
-
-    var block_result = [
-        [],
-        []
-    ]
+    var block_result = []
     var i = 0
     var j = 0
     var s = ''
     var n = []
+    i = 0
+
 
     if (sku.key == '') {
         if (typeof block['total'] != 'undefined') {
             return block['total']
         }
         for (i = 0; i < keys.length; i++) {
+            block_result[i]=[]
             for (j = 0; j < keys[i].values.length; j++) {
                 s = keys[i].propId + ':' + keys[i].values[j].valueId
                 if (getNum(s) == 0) {
@@ -188,15 +179,14 @@ function genBlock(sku) {
     }
 
     i = 0
-    console.log('keys', keys)
+
     for (i in keys) {
         s = ''
         n = []
-        j=0
+        j = 0
+        block_result[i] = []
         for (j in keys[i].values) {
-            console.log('i',i)
-            console.log('j',j)
-            console.log('key_index', sku.key_index)
+
             if (typeof sku.key_index[i] != 'undefined') {
                 if (sku.key_index[i] == j) {
                     block_result[i][j] = false
@@ -204,26 +194,18 @@ function genBlock(sku) {
                 }
 
             }
-            
             n = [].concat(sku.key_index);
             n[i] = j
-            console.log('n', n)
             s = combine(n)
-            console.log('s', s)
-            console.log(s, getNum(s))
-            console.log(typeof getNum(s))
             if (getNum(s) == 0) {
-                console.log(s, true)
                 block_result[i][j] = true
             } else {
-                console.log(s, false)
                 block_result[i][j] = false
             }
 
         }
     }
-    console.log('i2',i)
-    console.log('j2',j)
+
     block[sku.key] = block_result
     return block_result
 }
@@ -238,11 +220,7 @@ function genData(that, x, y) {
         sku: sku
     })
 
-
-
 }
-
-
 
 function add(that) {
     var sku = that.data.sku
@@ -277,7 +255,6 @@ function update(that, e) {
         sku: sku
     })
 }
-
 
 module.exports.get_product = get_product
 module.exports.genData = genData
