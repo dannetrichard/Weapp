@@ -1,33 +1,29 @@
+var data = {}
+var myData = {}
+var keys = {}
+var block = {}
 
-var data={}
-var myData={}
-var keys={}
-
-function get_product(that,i){
+function get_product(that, i) {
     wx.request({
-        url: 'https://43691113.julystu.xyz/product/'+i,
+        url: 'https://43691113.julystu.xyz/product/' + i,
         success: function(res) {
-            var i
-            var total = 0
-            for(i=0;i<res.data.sku.length;i++){
-                   data[res.data.sku[i].properties] = res.data.sku[i]
-                   total = total + res.data.sku[i].quantity
+            var i = 0
+            for (i in res.data.sku) {
+                data[res.data.sku[i].properties] = res.data.sku[i]
             }
-            res.data.num = total
-
             keys = res.data.sku_props
 
             that.setData({
-               product : res.data 
+                product: res.data
             })
-            console.log('product',that.data.product)
             sku_init(that)
-            console.log('sku',that.data.sku)
-           // buildData(that,0,2)
-            console.log('sku',that.data.sku)
         }
     })
 }
+
+
+
+
 
 function getNum(key) {
     var result = 0,
@@ -46,8 +42,8 @@ function getNum(key) {
     //拼接子串
     for (i = 0; i < keys.length; i++) {
         for (j = 0; j < keys[i].values.length && items.length > 0; j++) {
-            s = keys[i].propId + ':' +keys[i].values[j].valueId 
-            if ( s == items[0]) {
+            s = keys[i].propId + ':' + keys[i].values[j].valueId
+            if (s == items[0]) {
                 break;
             }
         }
@@ -57,8 +53,7 @@ function getNum(key) {
         } else {
             //分解求值
             for (m = 0; m < keys[i].values.length; m++) {
-
-                s = keys[i].propId + ':' + keys[i].values[m].valueId 
+                s = keys[i].propId + ':' + keys[i].values[m].valueId
                 result += getNum(n.concat(s, items).join(";"));
             }
             break;
@@ -69,141 +64,207 @@ function getNum(key) {
     return result;
 }
 
-function sku_init(that){
-        var i=0
-        var j=0
-        var l=[]
-        var m=[]
-        var n =[]
-        var s=''
-        var sku = { 
-            'is_show'                   :false,
-            'key_index'                 : [], 
-            'key'                       : '', 
-            'prop_properties_name'      : '',
-            'sku_id'                    : '', 
-            'name'                      : that.data.product.name,            
-            'img_url'                   : that.data.product.pic_url,
-            'price'                     : that.data.product.price, 
-            'shop_price'                : that.data.product.shop_price, 
-            'quantity'                  : that.data.product.num,            
-            'num'                       : '1', 
-            'block'                     : [[],[]],
-            'sku_props'                 : that.data.product.sku_props, 
-        }
 
-        for(i=0;i<keys.length;i++){
-            for(j=0;j<keys[i].values.length;j++){
-                s = keys[i].propId + ':' +keys[i].values[j].valueId 
-                if(getNum(s) == that.data.product.num){
-                    n.push(s)
-                    m.push(keys[i].values[j].name)
-
-                    sku.key_index[i] = j 
-                    sku.block[i][j] = false
-                }else if(getNum(s) == 0){
-                    sku.block[i][j] = true
-                }else{
-                    sku.block[i][j] = false
-                }
-            }
-        }
-        sku.key                         =   n.join(';')       
-        sku.prop_properties_name        =   m.join(' ')
-        sku.quantity                    =   getNum(sku.key)
-        if(keys[1].values.length==1&&keys[1].values[0].imgUrl){
-            sku.img_url = keys[1].values[0].imgUrl
-        }
-        if(n.length == keys.length){
-            sku.sku_id                      =   data[sku.key].sku_id
-            sku.price                       =   data[sku.key].price
-            sku.shop_price                  =   data[sku.key].shop_price         
-        }
-        that.setData({
-            sku:sku
-        })
-}
-function buildData(that,x,y){
-    var i=0
-    var j=0
-    var s=''
-    var n = []
-    var m = []
-    var sku = that.data.sku
-    sku.key_index[x] = y 
-
-    for(i=0;i<keys.length;i++){
-        if(i!=x){
-            for(j=0;j<keys[i].values.length;j++){
-                n=[]
-                if(i<x){
-                    n.push(keys[i].propId + ':' +keys[i].values[j].valueId)
-                    n.push(keys[x].propId + ':' +keys[x].values[y].valueId)
-                }else{
-                    n.push(keys[x].propId + ':' +keys[x].values[y].valueId)
-                    n.push(keys[i].propId + ':' +keys[i].values[j].valueId)
-                }
-
-                s=n.join(';')
-
-                if(getNum(s)>0){
-                    sku.block[i][j] = false
-                }else{
-                    sku.block[i][j] = true
-                }     
-                
-            }
-        }
-
+function sku_init(that) {
+    var i = 0
+    var sku = {
+        'is_show': false,
+        'key_index': [],
+        'key': '',
+        'prop_properties_name': '',
+        'sku_id': '',
+        'name': that.data.product.name,
+        'img_url': that.data.product.pic_url,
+        'price': that.data.product.price,
+        'shop_price': that.data.product.shop_price,
+        'quantity': that.data.product.num,
+        'num': '1',
+        'block': [
+            [],
+            []
+        ],
+        'sku_props': that.data.product.sku_props,
     }
 
-    n=[]
-    m=[]
-    for(i=0;i<keys.length;i++){
-        if(sku.key_index[i]!=null){
-            n.push(keys[i].propId + ':' +keys[i].values[sku.key_index[i]].valueId)
-            m.push(keys[i].values[sku.key_index[i]].name)
+    //key_index
+    i = 0
+    for (i in keys) {
+        if (keys[i].values.length == 1) {
+            sku.key_index[i] = 0
         }
     }
-    sku.key = n.join(';')
-    sku.prop_properties_name    =   m.join(' ')
-    sku.quantity                =   getNum(sku.key)
-
-
-    if(x==1&&keys[x].values[y].imgUrl){
-        sku.img_url = keys[x].values[y].imgUrl
-    }
-
-    if(n.length == keys.length){
-        sku.sku_id                      =   data[sku.key].sku_id
-        sku.price                       =   data[sku.key].price
-        sku.shop_price                  =   data[sku.key].shop_price
-    }
-
+    sku = coregen(sku)
     that.setData({
-       sku:sku
+        sku: sku
     })
 
 }
-function add(that){
+
+function combine(n) {
+    var i
+    var m = []
+    for (i in n) {
+        if (typeof n[i] != 'undefined') {
+            m.push(keys[i].propId + ':' + keys[i].values[n[i]].valueId)
+        }
+
+    }
+    return m.join(';')
+}
+
+function coregen(sku) {
+    var i = 0
+    var j = 0
+    var n = []
+    var m = []
+
+    for (i in sku.key_index) {
+        n.push(keys[i].propId + ':' + keys[i].values[sku.key_index[i]].valueId)
+        m.push(keys[i].values[sku.key_index[i]].name)
+        if (keys[i].values[sku.key_index[i]].imgUrl) {
+            //img_url
+            sku.img_url = keys[i].values[sku.key_index[i]].imgUrl
+        }
+    }
+    if (n.length > 0) {
+        sku.key = n.join(';')
+            //quantity
+        sku.quantity = getNum(sku.key)
+            //key        
+    }
+    //sku_id\price\shop_price
+    if (n.length == keys.length) {
+        sku.sku_id = data[sku.key].sku_id
+        sku.price = data[sku.key].price
+        sku.shop_price = data[sku.key].shop_price
+        sku.prop_properties_name = m.join(' ')
+    } else {
+        i = 0
+        m = []
+        for (i in keys) {
+            if (sku.key_index[i] == null) {
+                m.push(keys[i].propName)
+            }
+        }
+        sku.prop_properties_name = '请选择 ' + m.join('、')
+    }
+    sku.block = genBlock(sku)
+
+    return sku
+}
+
+function genBlock(sku) {
+
+    var block_result = [
+        [],
+        []
+    ]
+    var i = 0
+    var j = 0
+    var s = ''
+    var n = []
+
+    if (sku.key == '') {
+        if (typeof block['total'] != 'undefined') {
+            return block['total']
+        }
+        for (i = 0; i < keys.length; i++) {
+            for (j = 0; j < keys[i].values.length; j++) {
+                s = keys[i].propId + ':' + keys[i].values[j].valueId
+                if (getNum(s) == 0) {
+                    block_result[i][j] = true
+                } else {
+                    block_result[i][j] = false
+                }
+
+            }
+        }
+        block['total'] = block_result;
+        return block_result;
+    }
+
+    if (typeof block[sku.key] != 'undefined') {
+        return block[sku.key]
+    }
+
+    i = 0
+    console.log('keys', keys)
+    for (i in keys) {
+        s = ''
+        n = []
+        j=0
+        for (j in keys[i].values) {
+            console.log('i',i)
+            console.log('j',j)
+            console.log('key_index', sku.key_index)
+            if (typeof sku.key_index[i] != 'undefined') {
+                if (sku.key_index[i] == j) {
+                    block_result[i][j] = false
+                    continue
+                }
+
+            }
+            
+            n = [].concat(sku.key_index);
+            n[i] = j
+            console.log('n', n)
+            s = combine(n)
+            console.log('s', s)
+            console.log(s, getNum(s))
+            console.log(typeof getNum(s))
+            if (getNum(s) == 0) {
+                console.log(s, true)
+                block_result[i][j] = true
+            } else {
+                console.log(s, false)
+                block_result[i][j] = false
+            }
+
+        }
+    }
+    console.log('i2',i)
+    console.log('j2',j)
+    block[sku.key] = block_result
+    return block_result
+}
+//1、先生成key_index  2、生成key
+function genData(that, x, y) {
+    var sku = that.data.sku
+    sku.key_index[x] = y
+
+    sku = coregen(sku)
+
+    that.setData({
+        sku: sku
+    })
+
+
+
+}
+
+
+
+function add(that) {
     var sku = that.data.sku
     if (sku.num < that.data.sku.quantity) {
         sku.num++
             that.setData({
                 sku: sku
             })
-    }    
+    }
 }
-function move(that){
+
+function move(that) {
     var sku = that.data.sku
     if (sku.num > 1) {
         sku.num--
             that.setData({
                 sku: sku
             })
-    }   
+    }
 }
-function update(that,e){
+
+function update(that, e) {
     var sku = that.data.sku
     if (e.detail.value > that.data.sku.quantity) {
         sku.num = that.data.sku.quantity
@@ -214,12 +275,12 @@ function update(that,e){
     }
     that.setData({
         sku: sku
-    })  
+    })
 }
 
 
 module.exports.get_product = get_product
-module.exports.buildData = buildData
+module.exports.genData = genData
 module.exports.add = add
 module.exports.update = update
 module.exports.move = move
@@ -233,7 +294,7 @@ Page({
     },
     build:function(e){
         var that=this
-        tool.buildData(that,e.currentTarget.dataset.x,e.currentTarget.dataset.y)
+        tool.buildData(that,e)
     },
     add: function() {
         var that = this

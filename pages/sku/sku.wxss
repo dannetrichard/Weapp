@@ -137,9 +137,6 @@
 	background-color:#e40046;
 	color:#fff;
 }
-.block{
-	background-color:#666;
-}
 .num{
 	
 	border:none;

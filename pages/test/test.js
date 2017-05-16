@@ -1,13 +1,11 @@
 var tool = require('../../template/sku.js');
 
-
 Page({
     data: {
         product: {},
         sku: {},
         item_flag: 0,
-        desc_flag: 0,
-        loading_flag: true
+        desc_flag: -1
     },
     onShareAppMessage: function() {
         return {
@@ -35,25 +33,27 @@ Page({
     },
     item_load: function() {
         var that = this
-        that.setData({
-            item_flag: that.data.item_flag + 1
+        this.setData({
+            item_flag: this.data.item_flag + 1
         })
-        if (that.data.item_flag == 1 && that.data.desc_flag > 0) {
-            wx.hideLoading()
+
+        if (this.data.item_flag == 1) {
+            this.setData({
+                desc_flag: 0
+            })
         }
     },
     desc_load: function() {
-        var that = this
-        that.setData({
-            desc_flag: that.data.desc_flag + 1
+        this.setData({
+            desc_flag: this.data.desc_flag + 1
         })
-        if (that.data.item_flag > 0 && that.data.desc_flag == 1) {
+        if (this.data.desc_flag == 1) {
             wx.hideLoading()
         }
     },
     build: function(e) {
         var that = this
-        tool.buildData(that, e.currentTarget.dataset.x, e.currentTarget.dataset.y)
+        tool.genData(that,e.currentTarget.dataset.x,e.currentTarget.dataset.y)
     },
     add: function() {
         var that = this

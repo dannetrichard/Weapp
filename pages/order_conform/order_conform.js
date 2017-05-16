@@ -179,7 +179,6 @@ Page({
     },
     onLoad: function(e) {
         var that = this
-        common.get_user_info(that)
         get_addr(that)
         that.setData({
             order: {

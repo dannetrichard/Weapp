@@ -14,7 +14,7 @@
 		<view class="prop" wx:for="{{sku_props}}" wx:for-index="index" wx:for-item="item">
 			<view class="prop-name">{{item.propName}}</view>
 			<view class="prop-choose">
-				<button class="prop-value {{block[index][key] ? 'block':''}} {{key_index[index]==key ? 'prop_active':''}}" wx:for="{{item.values}}" wx:for-index="key" wx:for-item="val" data-x="{{index}}" data-y="{{key}}"  bindtouchstart="{{block[index][key] ? '':'build'}}">{{val.name}}</button>
+				<button class="prop-value {{block[index][key] ? 'block':''}} {{key_index[index]==key ? 'prop_active':''}}" wx:for="{{item.values}}" wx:for-index="key" wx:for-item="val" data-x="{{index}}" data-y="{{key}}" data-value="{{item.propId + ':' + val.valueId}}" bindtouchstart="build">{{val.name}}</button>
 			</view>
 		</view>
 		<view class="prop num">
