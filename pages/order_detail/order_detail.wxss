@@ -1,3 +1,4 @@
+/*
 page {
   display: block;
   min-height: 100%;
@@ -320,3 +321,4 @@ page {
 	font-weight:400;
 	color:#fff;		
 }
+*/

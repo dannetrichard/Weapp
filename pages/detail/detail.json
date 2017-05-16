@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "JULY",
-   "navigationBarBackgroundColor": "#c62f2f"
+  "navigationBarTitleText": "商品详情",
+  "enablePullDownRefresh":"false",
+   "navigationBarBackgroundColor": "#c62f2f",
+  "backgroundTextStyle": "light"
 } 

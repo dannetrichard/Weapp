@@ -2,7 +2,18 @@
 
 
 
-<view class="container">
+
+
+
+
+
+
+
+
+
+
+
+<!--view class="container">
 	<view class="status" style="background-color:#09bb07;">
 		<image class="sm" mode="aspectFit" src="../../common/order_detail_status_icon.png"/>
 		<text class="st">等待付款</text>
@@ -80,6 +91,6 @@
 
 <view class="pay">立即付款</view>
 
-</view>
+</view-->
 
 
