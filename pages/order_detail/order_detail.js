@@ -16,17 +16,16 @@ var get_order_detail = function(id) {
         })
     })
 }
-
+ 
 
 
 
 Page({
     data: {
         order: {},
-        addr: {},
-        // tid: '',
-        // created: ''
+        addr: {}
     },
+
 
 
 

@@ -69,8 +69,7 @@ Page({
         tool.update(that, e)
 
     },
-    sku_show: function(e) {
-        console.log('sku_show',e)
+    sku_show: function() {
         var that = this
         var sku = that.data.sku
         sku.is_show = true
@@ -87,7 +86,6 @@ Page({
         })
     },
     to_buy: function() {
-        console.log('sku_show',e)
         var url = '/pages/order_conform/order_conform?' +
             'product_id=' + this.data.product.product_id +
             '&cid=' + this.data.product.cid +
@@ -98,8 +96,6 @@ Page({
             '&num=' + this.data.sku.num +
             '&quantity=' + this.data.sku.quantity +
             '&sku_properties_name=' + this.data.sku.prop_properties_name
-
-                
 
         wx.navigateTo({
             url: url

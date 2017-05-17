@@ -1,11 +1,9 @@
 <view class="container">
+    <scroll-view  scroll-y="true" style="height:{{windowHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-top="{{scrollTop}}">
     <view class="list">
-        <block wx:for="{{products}}" wx:key="index">
-            <navigator url="/pages/detail/detail?id={{item.id}}" class="{{load_flag-6<=index?'hidden':''}}" hover-class="navigator-hover">
-                <view class="item">
-                    <image class="pic" mode="aspectFill" bindload="pic_load" src="{{load_flag>=index ? item.pic_url+'_400x400':''}}" />
-                </view>
-            </navigator>
-        </block>
-    </view>
+            <view class="item" wx:for="{{products}}" wx:key="item">
+                <image class="pic" mode="aspectFill"  src="{{item.pic_url+'_400x400'}}" />
+            </view>
+            </view>
+    </scroll-view>
 </view>

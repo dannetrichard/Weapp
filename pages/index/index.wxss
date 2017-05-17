@@ -19,5 +19,5 @@
     height: 420rpx;
 }
 .hidden{
-display:none;
+    display:none;
 }
