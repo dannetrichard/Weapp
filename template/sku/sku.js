@@ -2,22 +2,42 @@ var data = {}
 var myData = {}
 var keys = {}
 var block = {}
+var common = require('../../common/common.js');
 
 function get_product(that, i) {
-    wx.request({
-        url: 'https://43691113.julystu.xyz/product/' + i,
-        success: function(res) {
-            var i = 0
-            for (i in res.data.sku) {
-                data[res.data.sku[i].properties] = res.data.sku[i]
-            }
-            keys = res.data.sku_props
+    common.login(function(api_token) {
+        wx.request({
+            url: 'https://43691113.julystu.xyz/product/' + i,
+            data: {
+                'api_token': api_token
+            },
+            success: function(res) {
+                var i = 0
+                for (i in res.data.sku) {
+                    data[res.data.sku[i].properties] = res.data.sku[i]
+                }
+                keys = res.data.sku_props
 
-            that.setData({
-                product: res.data
-            })
-            sku_init(that)
-        }
+                res.data.item_imgs = res.data.item_imgs.map(function(item) {
+                    return { 'loaded': false, 'url': item }
+                })
+                var desc = []
+
+
+                if (res.data.desc != null) {
+                    res.data.desc = res.data.desc.map(function(item) {
+                        return { 'loaded': false, 'url': item }
+                    })
+                    desc = res.data.desc.splice(0, 1)
+                }
+
+                that.setData({
+                    product: res.data,
+                    desc: desc
+                })
+                sku_init(that)
+            }
+        })
     })
 }
 
@@ -126,7 +146,7 @@ function coregen(sku) {
     }
     //sku_id\price\shop_price
     if (n.length == keys.length) {
-        sku.sku_id = data[sku.key].sku_id
+        sku.sku_id = data[sku.key].id
         sku.price = data[sku.key].price
         sku.shop_price = data[sku.key].shop_price
         sku.prop_properties_name = m.join(' ')
@@ -159,7 +179,7 @@ function genBlock(sku) {
             return block['total']
         }
         for (i = 0; i < keys.length; i++) {
-            block_result[i]=[]
+            block_result[i] = []
             for (j = 0; j < keys[i].values.length; j++) {
                 s = keys[i].propId + ':' + keys[i].values[j].valueId
                 if (getNum(s) == 0) {

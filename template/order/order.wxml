@@ -1,0 +1,48 @@
+<template name="order">
+    <scroll-view scroll-y="true" style="height:{{windowHeight-45}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" enable-back-to-top="true">
+        <view class="no-orders" wx:if="{{trades.length==0}}">还没有订单哦^^</view>
+        <view class="order" wx:for="{{trades}}" wx:for-index="index" wx:for-item="item">
+            <view class="order-header">
+                <view class="header-left">
+                    <image class="shop-icon" mode="aspectFill" src="../../common/shop.png" />
+                </view>
+                <view class="shop-name">JULY女装</view>
+                <view class="status">{{status[item.status]}}</view>
+            </view>
+            <view class="order-body" wx:for="{{item.orders}}" wx:for-index="key" wx:for-item="val" data-tid="{{item.id}}" data-oid="{{val.id}}" bindtap="goto_detail">
+                <view class="body-left">
+                    <image class="product-img" mode="aspectFit" src="{{val.pic_path}}" />
+                </view>
+                <view class="body-center">
+                    <view class="name">{{val.title}}</view>
+                    <view class="sku-properties-name">{{val.sku_properties_name}}</view>
+                </view>
+                <view class="body-right">
+                    <view class="price">¥ {{val.price}}</view>
+                    <view class="num">x{{val.num}}</view>
+                </view>
+            </view>
+            <view class="total-fee">共{{item.num}}件商品 合计:¥
+                <text class="strong">{{item.total_fee}}</text>(含运费¥{{item.post_fee}})</view>
+            <view class="split-line"></view>
+            <view class="order-footer" wx:if="{{item.status=='WAIT_BUYER_PAY'}}">
+                <view class="action" data-tid="{{item.id}}" bindtap="pay_now">立即支付</view>
+                <view class="action" data-tid="{{item.id}}" bindtap="cancel_order">取消订单</view>
+            </view>
+            <view class="order-footer" wx:elif="{{item.status=='WAIT_SELLER_SEND_GOODS'}}">
+                <view class="action" data-tid="{{item.id}}" bindtap="remind_seller_send_goods">提醒发货</view>
+            </view>
+            <view class="order-footer" wx:elif="{{item.status=='WAIT_BUYER_CONFIRM_GOODS'}}">
+                <view class="action" data-tid="{{item.id}}" bindtap="shipping_detail">查看物流</view>
+            </view>
+            <view class="order-footer" wx:elif="{{item.status=='TRADE_FINISHED'}}">
+                <view class="action" data-tid="{{item.id}}" bindtap="rate_now">立即评价</view>
+                <view class="action" data-tid="{{item.id}}" bindtap="delete_order">删除订单</view>
+            </view>
+            <view class="order-footer" wx:elif="{{item.status=='TRADE_CLOSED'||item.status=='TRADE_CLOSED_BY_TAOBAO'}}">
+                <view class="action" data-tid="{{item.id}}" bindtap="delete_order">删除订单</view>
+            </view>
+            <view class="gutter"></view>
+        </view>
+    </scroll-view>
+</template>

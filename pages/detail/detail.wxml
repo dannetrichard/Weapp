@@ -1,14 +1,30 @@
-<import src="../../template/sku.wxml" />
-<swiper class="item-img-box" indicator-dots="true" duration="800">
-    <swiper-item wx:for="{{product.item_imgs}}" wx:key="item">
-        <image class="item-img" mode="widthFix" src="../../common/3.png" wx:if="{{item_flag < index }}" />
-        <image class="item-img {{item_flag > index ? 'loaded' : 'loading'}}" mode="widthFix" src="{{item_flag >= index ? item : ''}}" bindload="item_load" data-id="{{index}}" bindtap="itemPreview" />
-    </swiper-item>
-</swiper>
-<view class="desc-box">
-    <block wx:for="{{product.desc}}" wx:key="item">
-        <image class="desc" mode="widthFix" src="../../common/3.png" wx:if="{{desc_flag < index }}" />
-        <image class="desc {{desc_flag > index ? 'loaded' : 'loading'}}" mode="widthFix" src="{{desc_flag >= index ? item : ''}}" bindload="desc_load" />
-    </block>
+<import src="../../template/sku/sku.wxml" />
+<view class="user-action">
+    <button class="contact" open-type="contact" plain="true" style="border:none;">
+        <image mode="aspectFill" class="contact-image" src="../../common/ic_chat_notify.png" />
+    </button>
+    <image class="user-action-image" src="{{product.favor?'../../common/ic_like_40x40.png':'../../common/ic_like.png'}}" bindtap="favor" />
 </view>
+<view class="owner-action" wx:if="{{product.root}}">
+    <image class="owner-action-image" src="../../common/ic_praise_sm1.png" bindtap="refresh" />
+    <image class="owner-action-image" src="../../common/ic_praise_sm3.png" bindtap="good" />
+    <image class="owner-action-image" src="../../common/ic_praise_sm4.png" bindtap="bad" />
+</view>
+<scroll-view scroll-y="true" style="height:{{windowHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-top="0" enable-back-to-top="true">
+    <swiper class="item-img-box" indicator-dots="true" duration="800">
+        <swiper-item wx:for="{{product.item_imgs}}" wx:key="item">
+            <view class="pre-load" wx:if="{{!item.loaded}}"></view>
+            <image class="item-img {{item.loaded ? 'loaded' : ''}}" mode="widthFix" src="{{item.url}}" bindload="item_load" data-id="{{index}}" bindtap="itemPreview" />
+        </swiper-item>
+    </swiper>
+    <view class="desc-box">
+        <block wx:for="{{desc}}" wx:key="item">
+            <view class="pre-load" wx:if="{{!item.loaded}}"></view>
+            <image class="desc-img {{item.loaded ? 'loaded' : ''}}" mode="widthFix" src="{{item.url}}" bindload="desc_load" data-id="{{index}}" />
+        </block>
+    </view>
+    <view class="buy front-buy" bindtap="sku_show">
+        <button class="to-buy">立即购买</button>
+    </view>
+</scroll-view>
 <template is="sku" data="{{...sku}}" />

@@ -1,20 +1,21 @@
+var app = getApp()
 var common = require('../../common/common.js');
 var get_addr = function get_addr(that) {
     common.login(function(api_token) {
-            wx.request({
-                url: 'https://43691113.julystu.xyz/addr/find',
-                data: {
-                    'api_token': api_token
-                },
-                success: function(res) {
-                    if (res.data != null) {
-                        that.setData({
-                            addr: res.data
-                        })
-                    }
-                    console.log('find addr', res.data)
+        wx.request({
+            url: 'https://43691113.julystu.xyz/addr/find',
+            data: {
+                'api_token': api_token
+            },
+            success: function(res) {
+                if (res.data != null) {
+                    that.setData({
+                        addr: res.data
+                    })
                 }
-            })
+                console.log('find addr', res.data)
+            }
+        })
     })
 }
 
@@ -47,69 +48,70 @@ var set_addr = function set_addr(that) {
     })
 }
 
-var order_submit = function(that){
-    if(that.data.addr.userName){
+var order_submit = function(that) {
+    if (that.data.addr.userName) {
         common.login(function(api_token) {
-                wx.request({
-                    url: 'https://43691113.julystu.xyz/trade/create',
-                    data: {
-                        'api_token': api_token,
-                        'userInfo': that.data.userInfo,
-                        'order':that.data.order,
-                        'addr':that.data.addr
-                    },
-                    success: function(res) {
-                        console.log(res.data)
+            wx.request({
+                url: 'https://43691113.julystu.xyz/trade/create',
+                data: {
+                    'api_token': api_token,
+                    'userInfo': that.data.userInfo,
+                    'order': that.data.order,
+                    'addr': that.data.addr
+                },
+                success: function(res) {
+                    wx.requestPayment({
+                        'timeStamp': res.data.timeStamp,
+                        'nonceStr': res.data.nonceStr,
+                        'package': res.data.package,
+                        'signType': res.data.signType,
+                        'paySign': res.data.paySign,
+                        'success': function(res) {},
+                        'fail': function() {
 
-                        console.log('req',new Date().getSeconds())
-                        wx.requestPayment({
-                           'timeStamp': res.data.timeStamp,
-                           'nonceStr': res.data.nonceStr,
-                           'package': res.data.package,
-                           'signType': res.data.signType,
-                           'paySign': res.data.paySign,
-                           'success':function(res){
-                                console.log('pay',new Date().getSeconds())
-                                console.log(res)
-                           },
-                           'fail':function(){
+                            //这里要关闭订单
+                            wx.request({
+                                url: 'https://43691113.julystu.xyz/trade/close',
+                                data: {
+                                    'api_token': api_token,
+                                    'tid': res.data.tid
+                                },
+                                success: function(res) {}
+                            })
+                            var url = '/pages/order_detail/order_detail?' +
+                                'tid=' + res.data.tid +
+                                '&created=' + res.data.created +
+                                '&userName=' + that.data.addr.userName +
+                                '&telNumber=' + that.data.addr.telNumber +
+                                '&street=' + that.data.addr.provinceName + that.data.addr.cityName + that.data.addr.detailInfo +
+                                '&product_id=' + that.data.order.product_id +
+                                '&cid=' + that.data.order.cid +
+                                '&img_url=' + that.data.order.img_url +
+                                '&name=' + that.data.order.name +
+                                '&price=' + that.data.order.price +
+                                '&sku_id=' + that.data.order.sku_id +
+                                '&sku_properties_name=' + that.data.order.sku_properties_name +
+                                '&num=' + that.data.order.num +
+                                '&quantity=' + that.data.order.quantity +
+                                '&adjust_fee=' + that.data.order.adjust_fee +
+                                '&discount_fee=' + that.data.order.discount_fee +
+                                '&post_fee=' + that.data.order.post_fee +
+                                '&total_fee=' + that.data.order.total_fee
 
-
-
-                                var url = '/pages/order_detail/order_detail?' +
-                                        'tid=' + res.data.tid +
-                                        '&created=' + res.data.created +
-                                        '&userName=' + that.data.addr.userName +
-                                        '&telNumber=' + that.data.addr.telNumber +
-                                        '&street=' + that.data.addr.provinceName + that.data.addr.cityName + that.data.addr.detailInfo +
-                                        '&product_id=' + that.data.order.product_id +
-                                        '&cid='+ that.data.order.cid +
-                                        '&img_url='+ that.data.order.img_url +
-                                        '&name='+ that.data.order.name +
-                                        '&price='+ that.data.order.price +
-                                        '&sku_id='+ that.data.order.sku_id +
-                                        '&sku_properties_name='+ that.data.order.sku_properties_name +
-                                        '&num='+ that.data.order.num +
-                                        '&quantity='+ that.data.order.quantity +
-                                        '&adjust_fee='+ that.data.order.adjust_fee +
-                                        '&discount_fee='+ that.data.order.discount_fee +
-                                        '&post_fee='+ that.data.order.post_fee +
-                                        '&total_fee='+ that.data.order.total_fee
-                                        
-                                wx.redirectTo({
-                                    url:  url
-                                })
-                           }
-                        })
-
-
-
+                            wx.redirectTo({
+                                url: url
+                            })
+                        }
+                    })
 
 
-                    }
-                })        
-        })          
-    }else{
+
+
+
+                }
+            })
+        })
+    } else {
         wx.showToast({
             title: '请添加收货地址',
             image: '../../common/info.png'
@@ -122,7 +124,7 @@ Page({
     data: {
         order: {},
         addr: {},
-        userInfo:{}
+        userInfo: {}
     },
     addr: function() {
         var that = this
@@ -180,6 +182,12 @@ Page({
     onLoad: function(e) {
         var that = this
         get_addr(that)
+        app.getUserInfo(function(userInfo) {
+            that.setData({
+                userInfo: userInfo
+            })
+        })
+        console.log(e)
         that.setData({
             order: {
                 'product_id': e.product_id,
@@ -191,9 +199,9 @@ Page({
                 'sku_properties_name': e.sku_properties_name,
                 'num': e.num,
                 'quantity': e.quantity,
-                'adjust_fee':0,
-                'discount_fee':0,
-                'post_fee':0,
+                'adjust_fee': 0,
+                'discount_fee': 0,
+                'post_fee': 0,
                 'total_fee': (e.price * e.num).toFixed(2)
             },
         })

@@ -9,6 +9,9 @@ var get_list = function(cb) {
         wx.request({
             url: next_page_url,
             success: function(res) {
+                res.data.data.map(function(item) {
+                    item.loaded = false
+                })
                 products = products.concat(res.data.data)
                 next_page_url = res.data.next_page_url
                 typeof cb == "function" && cb(products)
@@ -21,12 +24,14 @@ var get_list = function(cb) {
 Page({
     data: {
         products: [],
-        load_flag: 0,
         scrollTop: 0,
-        windowHeight: 0
+        windowHeight: 0,
     },
     onLoad: function() {
         var that = this
+        products = []
+        next_page_url = 'https://43691113.julystu.xyz/product'
+        load_once = 2
         get_list(function(products) {
             that.setData({
                 products: products.splice(0, 10)
@@ -41,27 +46,45 @@ Page({
         })
         common.login('', true)
     },
-    upper: function() {
 
+    upper: function() {
+        var that = this
+        products = []
+        next_page_url = 'https://43691113.julystu.xyz/product'
+        load_once = 2
+        get_list(function(products) {
+            that.setData({
+                products: products.splice(0, 10)
+            })
+        })
 
     },
-    lower:function(){
+    detail: function(e) {
+        var url = "/pages/detail/detail?id=" + e.currentTarget.dataset.id
+        wx.navigateTo({
+            url: url
+        })
+    },
+    upper: function() {
+
+    },
+    lower: function() {
         this.setData({
             products: this.data.products.concat(products.splice(0, load_once))
         })
-        products.length<10&&get_list('')
+        products.length < 10 && get_list('')
     },
-    scroll:function(e){
+    scroll: function(e) {
         console.log(e)
     },
-    // pic_load: function() {
-    //     this.setData({
-    //         load_flag: this.data.load_flag + 1,
-    //     })
-    //     if (products.length < load_once) {
-    //         get_list()
-    //     }
-    // },
+    pic_load: function(e) {
+        var that = this
+        var products = that.data.products
+        products[e.currentTarget.dataset.index].loaded = true
+        that.setData({
+            products: products
+        })
+    },
     // onReachBottom: function() {
     //     this.setData({
     //         products: this.data.products.concat(products.splice(0, load_once))

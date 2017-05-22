@@ -1,51 +1,14 @@
-<view class="container">
-		
-	<view class="tab"> 
-		<view wx:for="{{select}}" wx:key="index" class="status {{n == index ?'status-selected':''}}"  data-n="{{index}}" bindtap="tab_select">{{item.title}}</view>
-	</view>
-	<view class="date">{{date}}</view>
-
-
-
-	 
-
-	<block wx:for="{{orders}}" wx:key="id">
-		<view class="order">
-			<!--view class="order_header">
-				<view class="oh1">
-					<image class="oh11" mode="aspectFill" src="../../common/shop.png"/>
-				</view>
-				<view class="oh2">JULY 女装严选</view>
-				<view class="oh3">交易关闭</view>
-			</view-->
-			<view class="split-line"></view> 
-			<view class="order_body_outer"> 
-				<view class="order_body">
-					<view class="ob1">
-						<image class="ob11" mode="aspectFit" src="{{item.order.pic_path}}"/>
-					</view>
-					<view class="ob2">
-						<view class="ob21">{{item.order.title}}</view>
-						<view class="ob22">{{item.order.sku_properties_name}}</view>
-					</view>
-					<view class="ob3">
-						<view class="ob31">¥ {{item.order.price}}</view>
-						<view class="ob32">X{{item.order.num}}</view>
-					</view>
-				</view>
-			</view>
-			<view class="split-line2"></view> 
-
-
-					
-			
-			<view class="ot1">全国包邮 总计: ¥ {{item.total_fee}}</view>
-			<button class="ot2">立即支付</button>
-			
-			
-		</view>	
-		<view class="gutter"></view> 
-	</block>
-</view>
-
-
+<import src="../../template/order/order.wxml" />
+<scroll-view scroll-x="true" style="width:750rpx;" scroll-left="{{scrollLeft}}" class="tab">
+    <view class="nav-bar">
+        <view id="id-{{index}}" data-n="{{index}}" class="nav-title {{n==index?' active':''}}" bindtap="tabClick" wx:for="{{selects}}" wx:key="item" bindtap="tab_select">
+            {{item.title}}
+        </view>
+        <view class="navbar-slider" style="transform:translateX({{offsetLeft[n]}}px);"></view>
+    </view>
+</scroll-view>
+<swiper class="swiper-box" duration="100" current="{{n}}" bindchange="bindChange" style="height:{{windowHeight-45}}px;">
+    <swiper-item wx:for="{{selects}}" wx:key="item">
+        <template is="order" data="{{trades,status,windowHeight}}" />
+    </swiper-item>
+</swiper>

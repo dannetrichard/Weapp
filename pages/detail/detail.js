@@ -1,11 +1,14 @@
-var tool = require('../../template/sku.js');
+var tool = require('../../template/sku/sku.js');
+var common = require('../../common/common.js');
+
+
 
 Page({
     data: {
         product: {},
         sku: {},
-        item_flag: 0,
-        desc_flag: -1
+        windowHeight: 0,
+        desc: []
     },
     onShareAppMessage: function() {
         return {
@@ -22,8 +25,11 @@ Page({
             imgs[i] = imgs[i - 1]
         }
         imgs[0] = temp
+
         wx.previewImage({
-            urls: imgs
+            urls: imgs.map(function(item) {
+                return item.url
+            })
         })
     },
     img_url_preview: function() {
@@ -31,29 +37,112 @@ Page({
             urls: [this.data.sku.img_url]
         })
     },
-    item_load: function() {
+    item_load: function(e) {
         var that = this
-        this.setData({
-            item_flag: this.data.item_flag + 1
-        })
+        var product = that.data.product
+        product.item_imgs[e.currentTarget.dataset.id].loaded = true
 
-        if (this.data.item_flag == 1) {
+        that.setData({
+            product: product
+        })
+        wx.hideLoading()
+
+    },
+    desc_load: function(e) {
+        var that = this
+        var desc = that.data.desc
+        desc[e.currentTarget.dataset.id].loaded = true
+
+        that.setData({
+            desc: desc
+        })
+    },
+    lower: function() {
+        if (this.data.product.desc.length > 0) {
             this.setData({
-                desc_flag: 0
+                desc: this.data.desc.concat(this.data.product.desc.splice(0, 1))
             })
         }
+
     },
-    desc_load: function() {
-        this.setData({
-            desc_flag: this.data.desc_flag + 1
+    favor: function() {
+        var that = this
+        var product = that.data.product
+        product.favor = !product.favor
+        common.login(function(api_token) {
+            wx.request({
+                url: 'https://43691113.julystu.xyz/favor_toggle',
+                data: {
+                    'api_token': api_token,
+                    id: that.data.product.id
+                },
+                success: function(){
+                    that.setData({
+                        product: product
+                    })
+                }
+            })
         })
-        if (this.data.desc_flag == 1) {
-            wx.hideLoading()
-        }
+    },
+    refresh: function() {
+        var that = this
+        common.login(function(api_token) {
+            wx.request({
+                url: 'https://43691113.julystu.xyz/product/refresh/' + that.data.product.id,
+                data: {
+                    'api_token': api_token
+                },
+                success: function(res) {
+                    wx.showToast({
+                        title: '更新完成'
+                    })
+                }
+            })
+        })
+    },
+    good: function() {
+        var that = this
+        common.login(function(api_token) {
+            wx.request({
+                url: 'https://43691113.julystu.xyz/product/good/' + that.data.product.id,
+                data: {
+                    'api_token': api_token
+                },
+                success: function(res) {
+                    wx.showToast({
+                        title: res.data
+                    })
+                    wx.clearStorage()
+                    wx.reLaunch({
+                        url: '/pages/index/index'
+                    })
+                }
+            })
+        })
+    },
+    bad: function() {
+        var that = this
+        common.login(function(api_token) {
+            wx.request({
+                url: 'https://43691113.julystu.xyz/product/bad/' + that.data.product.id,
+                data: {
+                    'api_token': api_token
+                },
+                success: function(res) {
+                    wx.showToast({
+                        title: res.data
+                    })
+                    wx.clearStorage()
+                    wx.reLaunch({
+                        url: '/pages/index/index'
+                    })
+                }
+            })
+        })
     },
     build: function(e) {
         var that = this
-        tool.genData(that,e.currentTarget.dataset.x,e.currentTarget.dataset.y)
+        tool.genData(that, e.currentTarget.dataset.x, e.currentTarget.dataset.y)
     },
     add: function() {
         var that = this
@@ -87,7 +176,7 @@ Page({
     },
     to_buy: function() {
         var url = '/pages/order_conform/order_conform?' +
-            'product_id=' + this.data.product.product_id +
+            'product_id=' + this.data.product.id +
             '&cid=' + this.data.product.cid +
             '&name=' + this.data.product.name +
             '&sku_id=' + this.data.sku.sku_id +
@@ -103,11 +192,28 @@ Page({
     },
     onLoad: function(e) {
         var that = this
+        wx.getSystemInfo({
+            success: function(res) {
+                that.setData({
+                    windowHeight: res.windowHeight
+                })
+            }
+        })
         wx.showLoading({
             title: '加载中',
             mask: true
         })
         tool.get_product(that, e.id)
+
+    },
+    onHide: function() {
+        var that = this
+        var sku = that.data.sku
+        sku.is_show = false
+        that.setData({
+            sku: sku
+        })
+
     }
 
 })

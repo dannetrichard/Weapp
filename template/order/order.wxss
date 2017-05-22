@@ -1,0 +1,167 @@
+.no-orders{
+    width:750rpx;
+    height:500rpx;
+    text-align:center;
+    font-size:12pt;
+    color:#666;
+    padding-top:300rpx;
+}
+.order {
+    background: #fff;
+    width: 750rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.order-header {
+    width: 750rpx;
+    height: 100rpx;
+    padding: 0 30rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.header-left {
+    width: 90rpx;
+    height: 100rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.shop-icon {
+    width: 40rpx;
+    height: 40rpx;
+    box-sizing: border-box;
+}
+
+.shop-name {
+    width: 300rpx;
+    font-size: 10pt;
+    color: #333;
+}
+
+.status {
+    width: 300rpx;
+    font-size: 10pt;
+    color: #ff6666;
+    text-align: right;
+}
+
+.order-body {
+    width: 750rpx;
+    height: 160rpx;
+    padding: 15rpx 30rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+}
+
+.body-left {
+    width: 200rpx;
+    height: 130rpx;
+}
+
+.product-img {
+    width: 130rpx;
+    height: 130rpx;
+}
+
+.body-center {
+    width: 290rpx;
+    height: 130rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.name {
+    width: 290rpx;
+    font-size: 10pt;
+    color: #666;
+    line-height: 33rpx;
+    white-space: wrap;
+}
+
+.sku-properties-name {
+    width: 290rpx;
+    height: 36rpx;
+    font-size: 10pt;
+    color: #7e7e7e;
+    line-height: 36rpx;
+}
+
+.body-right {
+    width: 200rpx;
+    height: 130rpx;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.price {
+    width: 200rpx;
+    height: 33rpx;
+    font-size: 10pt;
+    color: #ff6666;
+    line-height: 33rpx;
+    text-align: right
+}
+
+.num {
+    width: 200rpx;
+    height: 36rpx;
+    font-size: 10pt;
+    color: #7e7e7e;
+    line-height: 36rpx;
+    text-align: right;
+}
+
+.order-footer {
+    width: 750rpx;
+    height: 90rpx;
+    padding: 0 30rpx;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.total-fee {
+    width: 690rpx;
+    height: 90rpx;
+    margin: 0 auto;
+    font-size: 10pt;
+    color: #666;
+    line-height: 90rpx;
+    text-align: right;
+}
+
+.strong {
+    font-size: 12pt;
+    color: #111;
+}
+
+.action {
+    font-size: 10pt;
+    color: #666;
+    text-align: center;
+    width: 160rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    border-radius: 20rpx;
+    border: 1rpx solid #666;
+    margin-left: 30rpx;
+}

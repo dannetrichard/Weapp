@@ -1,0 +1,16 @@
+<import src="../../template/order/order.wxml" />
+<template name="tab">
+    <scroll-view scroll-x="true" style="width:750rpx;" scroll-left="{{scrollLeft}}">
+        <view class="nav-bar" style="width:1000rpx;">
+            <view id="id-{{index}}" data-n="{{index}}" class="nav-title {{n==index?' active':''}}" bindtap="tabClick" wx:for="{{selects}}" wx:key="item" bindtap="tab_select">
+                {{item.title}}
+            </view>
+            <view class="navbar-slider" style="transform:translateX({{offsetLeft[n]}}px);"></view>
+        </view>
+    </scroll-view>
+    <swiper current="{{n}}" class="swiper-box" duration="0" bindchange="bindChange">
+        <swiper-item wx:for="{{selects}}" wx:key="item">
+            <template is="order" data="{{orders,status}}" />
+        </swiper-item>
+    </swiper>
+</template>

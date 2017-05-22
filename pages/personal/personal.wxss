@@ -1,4 +1,4 @@
-@import "../../template/userInfo.wxss";
+@import "../../template/userInfo/userInfo.wxss";
 page {
     background: #efeff4;
 }

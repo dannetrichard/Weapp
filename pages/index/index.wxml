@@ -1,9 +1,17 @@
 <view class="container">
-    <scroll-view  scroll-y="true" style="height:{{windowHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-top="{{scrollTop}}">
-    <view class="list">
+    <button class="share" open-type="share" plain="true" style="border:none;">
+        <image mode="aspectFill" class="share-image" src="../../common/ic_save_share_weixin_checked.png" />
+    </button>
+    <scroll-view scroll-y="true" style="height:{{windowHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-top="0" enable-back-to-top="true">
+        <view class="list">
             <view class="item" wx:for="{{products}}" wx:key="item">
-                <image class="pic" mode="aspectFill"  src="{{item.pic_url+'_400x400'}}" />
+                <image data-id="{{item.id}}" data-index="{{index}}" bindtap="detail" bindload="pic_load" class="pic{{item.loaded?' active':''}}" mode="aspectFill" src="{{item.pic_url+'_400x400'}}" />
+                <view class="dealer_price">
+                    <text wx:if="{{item.dealer_price>0}}">出厂价{{item.dealer_price}}</text>
+                    <text wx:if="{{item.dealer_price>0&&item.article_number!=''}}">/</text>
+                    <text wx:if="{{item.article_number!=''}}">货号{{item.article_number}}</text>
+                </view>
             </view>
-            </view>
+        </view>
     </scroll-view>
 </view>

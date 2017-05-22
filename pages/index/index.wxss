@@ -1,3 +1,19 @@
+
+.share {
+    position: fixed;
+    z-index: 10;
+    bottom: 40rpx;
+    right: 40rpx;
+    padding:0;
+    line-height:0;
+}
+
+.share-image  {
+    width: 100rpx;
+    height: 100rpx;
+}
+
+
 .list {
     width: 750rpx;
     display: flex;
@@ -6,6 +22,7 @@
     align-content: flex-start;
     box-sizing: border-box;
 }
+
 .item {
     display: flex;
     flex-flow: column nowrap;
@@ -14,10 +31,26 @@
     box-sizing: border-box;
     margin: 0 0 10rpx 0;
 }
-.pic{
+
+.pic {
     width: 370rpx;
     height: 420rpx;
+    opacity: 0;
+    border-radius:6rpx;
 }
-.hidden{
-    display:none;
+
+.active {
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+.dealer_price {
+    color: #999;
+    font-size: 10pt;
+    line-height: 60rpx;
+    height:60rpx;
 }

@@ -1,0 +1,1 @@
+<map id="myMap" show-location class="myMap" style="width:{{windowWidth}};height:{{windowHeight}};"/>
